@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class TabLivroFragment extends Fragment {
     private BDSQLiteHelper bd;
     ArrayList<Livro> listaLivros;
-    SearchView search = null ;
+    SearchView searchView;
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
@@ -31,6 +31,7 @@ public class TabLivroFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_livro,
                 container,
                 false);
+
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,6 +40,7 @@ public class TabLivroFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
         bd = new BDSQLiteHelper(getActivity());
 
         ListView lista = (ListView)  view.findViewById(R.id.lvLivros);
@@ -55,6 +57,25 @@ public class TabLivroFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        searchView = (SearchView) view.findViewById(R.id.searchView);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                adapter.getFilter().filter(query);
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
 
 
         return view;
