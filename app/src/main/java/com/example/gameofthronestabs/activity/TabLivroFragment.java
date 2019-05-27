@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import com.example.gameofthronestabs.R;
 import com.example.gameofthronestabs.adapter.LivrosOfflineAdapter;
@@ -20,7 +22,7 @@ import java.util.ArrayList;
 public class TabLivroFragment extends Fragment {
     private BDSQLiteHelper bd;
     ArrayList<Livro> listaLivros;
-
+    SearchView search = null ;
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
@@ -41,7 +43,7 @@ public class TabLivroFragment extends Fragment {
 
         ListView lista = (ListView)  view.findViewById(R.id.lvLivros);
         listaLivros = bd.getAllLivros();
-        LivrosOfflineAdapter adapter = new LivrosOfflineAdapter(getActivity(),  listaLivros);
+        final LivrosOfflineAdapter adapter = new LivrosOfflineAdapter(getActivity(),  listaLivros);
         lista.setAdapter(adapter);
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -53,6 +55,8 @@ public class TabLivroFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+
         return view;
 
     }
